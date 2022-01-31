@@ -15,4 +15,14 @@ class Tweet extends Model
         //retorna o autor do tweet
         return $this->belongsTo(User::class);
     }
+
+    public function likes(){
+        //retorna o autor do tweet
+        return $this->hasMany(Like::class)
+        ->where(function($query){
+            if(auth()->check()){
+                $query->where('user_id', auth()->user()->id());
+            }
+        }); 
+    }
 }
